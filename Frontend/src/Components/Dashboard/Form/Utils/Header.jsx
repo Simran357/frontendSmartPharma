@@ -27,7 +27,6 @@ const Header = () => {
     const menuItems = [
         { text: 'Retailer', path: '/Dashboard/Retailer' },
         { text: 'Inventory', path: '/Dashboard/Retailer/Inventory' },
-       
         { text: 'Wholesalers', path: '/Dashboard/Retailer/Order' },
         { text: 'Role Control', path: '/Dashboard/Wholesaler/AdminRoleAssign' },
         { text: 'Wholesaler Panel', path: '/Dashboard/Wholesaler' },
@@ -120,8 +119,8 @@ const Header = () => {
 
                         {/* PROFILE MENU */}
                         <UserProfileMenu
-                            username="Wholesaler"
-                            role="Admin"
+                            username={user?.name || 'User'}
+                            role={user?.role || 'Role'}
                         />
 
                     </Box>

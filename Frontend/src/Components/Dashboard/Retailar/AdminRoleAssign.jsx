@@ -73,6 +73,7 @@ const [openModel, setModel] = useState(false)
             user._id === userId ? { ...user, role } : user
           )
         )
+    alert("Role updated successfully!");
       };
     } catch (error) {
       console.log("Error assigning role:", error);

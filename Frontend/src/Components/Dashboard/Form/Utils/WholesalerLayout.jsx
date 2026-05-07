@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -12,19 +12,38 @@ import { DashboardCustomize } from '@mui/icons-material';
 import StoreIcon from '@mui/icons-material/Store';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
-
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UserProfileMenu from '../UserProfile';
 import { NotificationMenu } from './Notifications';
 import { SettingsMenu } from './Setting';
+import axiosInstance from './AxiosInstance';
+import { contextProvide } from './Context/CommonContext';
 const { Header, Sider, Content } = Layout;
 const Wholesalerlayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+    const [userData, setUserData] = useState(null);
+  
   const [openProfile, setOpenProfile] = useState(false)
+  const { auth } = useContext(contextProvide);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axiosInstance.get(`/registerroute/getsingleWholesaler/${auth}`);
+
+        setUserData(res?.data?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (auth) {
+      fetchUser();
+    } 
+  }, [auth]);
   const navigate = useNavigate()
   const location = useLocation();
   const wholesalerMenu = [
@@ -108,8 +127,12 @@ const Wholesalerlayout = () => {
        <SettingsMenu />
      
        <UserProfileMenu
-         username="Wholesaler"
-         role="Admin"
+        username={
+                userData?.username ||
+                userData?.email ||
+                "User"
+              }
+              role={userData?.role || "Retailer"}
        />
      
      </div>
