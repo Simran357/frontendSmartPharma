@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create axios instance
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5001/api",
+  baseURL: "https://backend-1-ni3c.onrender.com/api",
   timeout: 10000,
   withCredentials: true, // send cookies if needed
 });
